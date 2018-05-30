@@ -4,26 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eb65283cd774419aae662c4c42759178" Name="Diagram1" >
-        <EntityTypeShape EntityType="ModelMED.Patient" Width="1.5" PointX="3.125" PointY="2.25" />
-        <EntityTypeShape EntityType="ModelMED.Doctor" Width="1.5" PointX="6" PointY="3.875" />
-        <EntityTypeShape EntityType="ModelMED.Person" Width="1.5" PointX="1" PointY="0.875" />
-        <InheritanceConnector EntityType="ModelMED.Doctor" ManuallyRouted="false" >
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="ModelMED.Patient" />
-        <EntityTypeShape EntityType="ModelMED.MedCard" Width="1.5" PointX="3.125" PointY="4.5" />
-        <AssociationConnector Association="ModelMED.PatientMedCard" />
-        <EntityTypeShape EntityType="ModelMED.Illness" Width="1.5" PointX="1" PointY="4.5" />
+      <Diagram DiagramId="eb65283cd774419aae662c4c42759178" Name="Diagram1" ZoomLevel="80" >
+        <EntityTypeShape EntityType="ModelMED.Patient" Width="1.5" PointX="4.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ModelMED.Doctor" Width="1.5" PointX="10.125" PointY="3.875" />
+        <EntityTypeShape EntityType="ModelMED.Person" Width="1.5" PointX="4.625" PointY="3.125" />
+        <EntityTypeShape EntityType="ModelMED.MedCard" Width="1.5" PointX="9" PointY="6.875" />
+        <EntityTypeShape EntityType="ModelMED.Illness" Width="1.5" PointX="8.75" PointY="9.375" />
         <AssociationConnector Association="ModelMED.MedCardIllness" />
-        <EntityTypeShape EntityType="ModelMED.DocRecord" Width="1.5" PointX="3.125" PointY="6.75" />
+        <EntityTypeShape EntityType="ModelMED.DocRecord" Width="1.5" PointX="12.5" PointY="6.875" />
         <AssociationConnector Association="ModelMED.MedCardDocRecord" />
         <AssociationConnector Association="ModelMED.DoctorDocRecord" />
-        <EntityTypeShape EntityType="ModelMED.FreeTime" Width="1.5" PointX="8.75" PointY="3.875" />
+        <EntityTypeShape EntityType="ModelMED.FreeTime" Width="1.5" PointX="10.375" PointY="1.5" />
         <AssociationConnector Association="ModelMED.DoctorFreeTime" />
-        <EntityTypeShape EntityType="ModelMED.WorkTime" Width="1.5" PointX="7.125" PointY="1.5" />
+        <EntityTypeShape EntityType="ModelMED.WorkTime" Width="1.5" PointX="7.125" PointY="5.875" />
         <AssociationConnector Association="ModelMED.PatientWorkTime" />
         <AssociationConnector Association="ModelMED.DoctorWorkTime" />
-        <EntityTypeShape EntityType="ModelMED.Documents" Width="1.5" PointX="3.125" PointY="0.5" />
+        <EntityTypeShape EntityType="ModelMED.Documents" Width="1.5" PointX="7" PointY="2.25" />
+        <AssociationConnector Association="ModelMED.PatientMedCard" />
+        <InheritanceConnector EntityType="ModelMED.Patient" />
+        <InheritanceConnector EntityType="ModelMED.Doctor" />
         <AssociationConnector Association="ModelMED.DocumentsPerson" />
       </Diagram>
     </edmx:Diagrams>

@@ -23,8 +23,8 @@ namespace WebMVCDatabaseFirst.Models
         public string OMS { get; set; }
         public string Blood { get; set; }
     
-        public virtual MedCard MedCard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkTime> WorkTime { get; set; }
+        public virtual MedCard MedCard { get; set; }
     }
 }

@@ -23,10 +23,10 @@ namespace WebMVCDatabaseFirst.Models
     
         public int Id { get; set; }
     
-        public virtual Patient Patient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Illness> Illness { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocRecord> DocRecord { get; set; }
+        public virtual Patient Patient { get; set; }
     }
 }

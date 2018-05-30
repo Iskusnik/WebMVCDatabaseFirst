@@ -79,18 +79,33 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Data.Services.Design" />
+    <Reference Include="System.Data.SqlXml" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="System.IdentityModel.Services" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.DynamicData.Design" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Entity.Design" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -132,6 +147,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Serialization" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -198,55 +214,62 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DocRecordsController.cs" />
+    <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\FreeTimesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IllnessesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MedCardsController.cs" />
+    <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="Controllers\WorkTimesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DocRecord.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Doctor.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Documents.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FreeTime.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Illness.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedCard.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelMED.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelMED.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelMED.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelMED.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelMED.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelMEDtt.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMEDtt.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelMEDtt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Patient.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Person.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WorkTime.cs">
-      <DependentUpon>ModelMED.tt</DependentUpon>
+      <DependentUpon>ModelMEDtt.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -258,15 +281,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ModelMED.Context.tt">
+    <Content Include="Models\ModelMED.edmx.sql" />
+    <Content Include="Models\ModelMEDtt.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelMED.Context.cs</LastGenOutput>
+      <LastGenOutput>ModelMEDtt.Context.cs</LastGenOutput>
       <DependentUpon>ModelMED.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\ModelMED.edmx.sql" />
-    <Content Include="Models\ModelMED.tt">
+    <Content Include="Models\ModelMEDtt.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelMED.cs</LastGenOutput>
+      <LastGenOutput>ModelMEDtt.cs</LastGenOutput>
       <DependentUpon>ModelMED.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
@@ -278,9 +301,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelMED.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ModelMED.edmx.diagram">
-      <DependentUpon>ModelMED.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -327,6 +347,41 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\DocRecords\Create.cshtml" />
+    <Content Include="Views\DocRecords\Delete.cshtml" />
+    <Content Include="Views\DocRecords\Details.cshtml" />
+    <Content Include="Views\DocRecords\Edit.cshtml" />
+    <Content Include="Views\DocRecords\Index.cshtml" />
+    <Content Include="Views\Documents\Create.cshtml" />
+    <Content Include="Views\Documents\Delete.cshtml" />
+    <Content Include="Views\Documents\Details.cshtml" />
+    <Content Include="Views\Documents\Edit.cshtml" />
+    <Content Include="Views\Documents\Index.cshtml" />
+    <Content Include="Views\MedCards\Create.cshtml" />
+    <Content Include="Views\MedCards\Delete.cshtml" />
+    <Content Include="Views\MedCards\Details.cshtml" />
+    <Content Include="Views\MedCards\Edit.cshtml" />
+    <Content Include="Views\MedCards\Index.cshtml" />
+    <Content Include="Views\FreeTimes\Create.cshtml" />
+    <Content Include="Views\FreeTimes\Delete.cshtml" />
+    <Content Include="Views\FreeTimes\Details.cshtml" />
+    <Content Include="Views\FreeTimes\Edit.cshtml" />
+    <Content Include="Views\FreeTimes\Index.cshtml" />
+    <Content Include="Views\Illnesses\Create.cshtml" />
+    <Content Include="Views\Illnesses\Delete.cshtml" />
+    <Content Include="Views\Illnesses\Details.cshtml" />
+    <Content Include="Views\Illnesses\Edit.cshtml" />
+    <Content Include="Views\Illnesses\Index.cshtml" />
+    <Content Include="Views\People\Create.cshtml" />
+    <Content Include="Views\People\Delete.cshtml" />
+    <Content Include="Views\People\Details.cshtml" />
+    <Content Include="Views\People\Edit.cshtml" />
+    <Content Include="Views\People\Index.cshtml" />
+    <Content Include="Views\WorkTimes\Create.cshtml" />
+    <Content Include="Views\WorkTimes\Delete.cshtml" />
+    <Content Include="Views\WorkTimes\Details.cshtml" />
+    <Content Include="Views\WorkTimes\Edit.cshtml" />
+    <Content Include="Views\WorkTimes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -341,6 +396,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

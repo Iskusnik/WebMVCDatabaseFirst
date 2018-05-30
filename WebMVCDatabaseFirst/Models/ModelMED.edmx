@@ -13,13 +13,9 @@
     <EntitySet Name="FreeTimeSet" EntityType="ModelMED.Store.FreeTimeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WorkTimeSet" EntityType="ModelMED.Store.WorkTimeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DocumentsSet" EntityType="ModelMED.Store.DocumentsSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PersonSet_Patient" EntityType="ModelMED.Store.PersonSet_Patient" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonSet_Doctor" EntityType="ModelMED.Store.PersonSet_Doctor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonSet_Patient" EntityType="ModelMED.Store.PersonSet_Patient" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MedCardIllness" EntityType="ModelMED.Store.MedCardIllness" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="PatientMedCard" Association="ModelMED.Store.PatientMedCard">
-      <End Role="Patient" EntitySet="PersonSet_Patient" />
-      <End Role="MedCard" EntitySet="MedCardSet" />
-    </AssociationSet>
     <AssociationSet Name="FK_MedCardIllness_MedCard" Association="ModelMED.Store.FK_MedCardIllness_MedCard">
       <End Role="MedCard" EntitySet="MedCardSet" />
       <End Role="MedCardIllness" EntitySet="MedCardIllness" />
@@ -48,17 +44,21 @@
       <End Role="Doctor" EntitySet="PersonSet_Doctor" />
       <End Role="WorkTime" EntitySet="WorkTimeSet" />
     </AssociationSet>
+    <AssociationSet Name="PatientMedCard" Association="ModelMED.Store.PatientMedCard">
+      <End Role="Patient" EntitySet="PersonSet_Patient" />
+      <End Role="MedCard" EntitySet="MedCardSet" />
+    </AssociationSet>
     <AssociationSet Name="DocumentsPerson" Association="ModelMED.Store.DocumentsPerson">
       <End Role="Documents" EntitySet="DocumentsSet" />
       <End Role="Person" EntitySet="PersonSet" />
     </AssociationSet>
-    <AssociationSet Name="FK_Patient_inherits_Person" Association="ModelMED.Store.FK_Patient_inherits_Person">
-      <End Role="Person" EntitySet="PersonSet" />
-      <End Role="Patient" EntitySet="PersonSet_Patient" />
-    </AssociationSet>
     <AssociationSet Name="FK_Doctor_inherits_Person" Association="ModelMED.Store.FK_Doctor_inherits_Person">
       <End Role="Person" EntitySet="PersonSet" />
       <End Role="Doctor" EntitySet="PersonSet_Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_inherits_Person" Association="ModelMED.Store.FK_Patient_inherits_Person">
+      <End Role="Person" EntitySet="PersonSet" />
+      <End Role="Patient" EntitySet="PersonSet_Patient" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="PersonSet">
@@ -120,6 +120,14 @@
     <Property Name="Number" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Person_Id" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="PersonSet_Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Job" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Insurance" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="PersonSet_Patient">
     <Key>
       <PropertyRef Name="Id" />
@@ -129,14 +137,6 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="MedCard_Id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="PersonSet_Doctor">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Job" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Insurance" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="MedCardIllness">
     <Key>
       <PropertyRef Name="MedCard_Id" />
@@ -145,18 +145,6 @@
     <Property Name="MedCard_Id" Type="int" Nullable="false" />
     <Property Name="Illness_Id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="PatientMedCard">
-    <End Role="Patient" Type="ModelMED.Store.PersonSet_Patient" Multiplicity="*" />
-    <End Role="MedCard" Type="ModelMED.Store.MedCardSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="MedCard">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Patient">
-        <PropertyRef Name="MedCard_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="MedCardDocRecord">
     <End Role="MedCard" Type="ModelMED.Store.MedCardSet" Multiplicity="1" />
     <End Role="DocRecord" Type="ModelMED.Store.DocRecordSet" Multiplicity="*" />
@@ -217,6 +205,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PatientMedCard">
+    <End Role="Patient" Type="ModelMED.Store.PersonSet_Patient" Multiplicity="*" />
+    <End Role="MedCard" Type="ModelMED.Store.MedCardSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="MedCard">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="MedCard_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="DocumentsPerson">
     <End Role="Documents" Type="ModelMED.Store.DocumentsSet" Multiplicity="*" />
     <End Role="Person" Type="ModelMED.Store.PersonSet" Multiplicity="1" />
@@ -253,20 +253,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Patient_inherits_Person">
-    <End Role="Person" Type="ModelMED.Store.PersonSet" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Patient" Type="ModelMED.Store.PersonSet_Patient" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Patient">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Doctor_inherits_Person">
     <End Role="Person" Type="ModelMED.Store.PersonSet" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -281,6 +267,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Patient_inherits_Person">
+    <End Role="Person" Type="ModelMED.Store.PersonSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Patient" Type="ModelMED.Store.PersonSet_Patient" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -288,10 +288,6 @@
         <EntityContainer Name="ModelMEDContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PersonSet" EntityType="ModelMED.Person" />
           <EntitySet Name="MedCardSet" EntityType="ModelMED.MedCard" />
-          <AssociationSet Name="PatientMedCard" Association="ModelMED.PatientMedCard">
-            <End Role="Patient" EntitySet="PersonSet" />
-            <End Role="MedCard" EntitySet="MedCardSet" />
-          </AssociationSet>
           <EntitySet Name="IllnessSet" EntityType="ModelMED.Illness" />
           <AssociationSet Name="MedCardIllness" Association="ModelMED.MedCardIllness">
             <End Role="MedCard" EntitySet="MedCardSet" />
@@ -321,20 +317,24 @@
             <End Role="WorkTime" EntitySet="WorkTimeSet" />
           </AssociationSet>
           <EntitySet Name="DocumentsSet" EntityType="ModelMED.Documents" />
+          <AssociationSet Name="PatientMedCard" Association="ModelMED.PatientMedCard">
+            <End Role="Patient" EntitySet="PersonSet" />
+            <End Role="MedCard" EntitySet="MedCardSet" />
+          </AssociationSet>
           <AssociationSet Name="DocumentsPerson" Association="ModelMED.DocumentsPerson">
-            <End Role="Documents" EntitySet="DocumentsSet" />
-            <End Role="Person" EntitySet="PersonSet" />
+            <End EntitySet="DocumentsSet" Role="Documents" />
+            <End EntitySet="PersonSet" Role="Person" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Patient" BaseType="ModelMED.Person">
-          <Property Name="OMS" Type="String" Nullable="false" />
-          <Property Name="Blood" Type="String" Nullable="true" />
-          <NavigationProperty Name="MedCard" Relationship="ModelMED.PatientMedCard" FromRole="Patient" ToRole="MedCard" />
+          <Property Name="OMS" Nullable="false" Type="String" />
+          <Property Name="Blood" Nullable="true" Type="String" />
           <NavigationProperty Name="WorkTime" Relationship="ModelMED.PatientWorkTime" FromRole="Patient" ToRole="WorkTime" />
+          <NavigationProperty Name="MedCard" Relationship="ModelMED.PatientMedCard" FromRole="Patient" ToRole="MedCard" />
         </EntityType>
         <EntityType Name="Doctor" BaseType="ModelMED.Person">
-          <Property Name="Job" Type="String" Nullable="false" />
-          <Property Name="Insurance" Type="String" Nullable="false" />
+          <Property Name="Job" Nullable="false" Type="String" />
+          <Property Name="Insurance" Nullable="false" Type="String" />
           <NavigationProperty Name="DocRecord" Relationship="ModelMED.DoctorDocRecord" FromRole="Doctor" ToRole="DocRecord" />
           <NavigationProperty Name="FreeTime" Relationship="ModelMED.DoctorFreeTime" FromRole="Doctor" ToRole="FreeTime" />
           <NavigationProperty Name="WorkTime" Relationship="ModelMED.DoctorWorkTime" FromRole="Doctor" ToRole="WorkTime" />
@@ -343,13 +343,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FIO" Type="String" Nullable="false" />
-          <Property Name="Nation" Type="String" Nullable="true" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="false" />
-          <Property Name="BirthPlace" Type="String" Nullable="true" />
-          <Property Name="LivePlace" Type="String" Nullable="true" />
-          <Property Name="Pol" Type="String" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="FIO" Nullable="false" Type="String" />
+          <Property Name="Nation" Nullable="true" Type="String" />
+          <Property Name="BirthDate" Nullable="false" Type="DateTime" />
+          <Property Name="BirthPlace" Nullable="true" Type="String" />
+          <Property Name="LivePlace" Nullable="true" Type="String" />
+          <Property Name="Pol" Nullable="false" Type="String" />
           <NavigationProperty Name="Documents" Relationship="ModelMED.DocumentsPerson" FromRole="Person" ToRole="Documents" />
         </EntityType>
         <EntityType Name="MedCard">
@@ -357,14 +357,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Patient" Relationship="ModelMED.PatientMedCard" FromRole="MedCard" ToRole="Patient" />
           <NavigationProperty Name="Illness" Relationship="ModelMED.MedCardIllness" FromRole="MedCard" ToRole="Illness" />
           <NavigationProperty Name="DocRecord" Relationship="ModelMED.MedCardDocRecord" FromRole="MedCard" ToRole="DocRecord" />
+          <NavigationProperty Name="Patient" Relationship="ModelMED.PatientMedCard" FromRole="MedCard" ToRole="Patient" />
         </EntityType>
-        <Association Name="PatientMedCard">
-          <End Type="ModelMED.Patient" Role="Patient" Multiplicity="1" />
-          <End Type="ModelMED.MedCard" Role="MedCard" Multiplicity="1" />
-        </Association>
         <EntityType Name="Illness">
           <Key>
             <PropertyRef Name="Id" />
@@ -427,13 +423,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Person" Relationship="ModelMED.DocumentsPerson" FromRole="Documents" ToRole="Person" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Number" Type="String" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="ModelMED.DocumentsPerson" FromRole="Documents" ToRole="Person" />
         </EntityType>
+        <Association Name="PatientMedCard">
+          <End Type="ModelMED.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="ModelMED.MedCard" Role="MedCard" Multiplicity="1" />
+        </Association>
         <Association Name="DocumentsPerson">
-          <End Type="ModelMED.Documents" Role="Documents" Multiplicity="1" />
-          <End Type="ModelMED.Person" Role="Person" Multiplicity="1" />
+          <End Type="ModelMED.Documents" Multiplicity="1" Role="Documents" />
+          <End Type="ModelMED.Person" Multiplicity="1" Role="Person" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -453,18 +453,18 @@
           <ScalarProperty Name="Pol" ColumnName="Pol" />
         </MappingFragment>
       </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(ModelMED.Patient)">
-        <MappingFragment StoreEntitySet="PersonSet_Patient">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="OMS" ColumnName="OMS" />
-          <ScalarProperty Name="Blood" ColumnName="Blood" />
-        </MappingFragment>
-      </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(ModelMED.Doctor)">
         <MappingFragment StoreEntitySet="PersonSet_Doctor">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Job" ColumnName="Job" />
           <ScalarProperty Name="Insurance" ColumnName="Insurance" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ModelMED.Patient)">
+        <MappingFragment StoreEntitySet="PersonSet_Patient">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OMS" ColumnName="OMS" />
+          <ScalarProperty Name="Blood" ColumnName="Blood" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -515,14 +515,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="PatientMedCard" TypeName="ModelMED.PatientMedCard" StoreEntitySet="PersonSet_Patient">
-      <EndProperty Name="MedCard">
-        <ScalarProperty Name="Id" ColumnName="MedCard_Id" />
-      </EndProperty>
-      <EndProperty Name="Patient">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="MedCardIllness" TypeName="ModelMED.MedCardIllness" StoreEntitySet="MedCardIllness">
       <EndProperty Name="MedCard">
         <ScalarProperty Name="Id" ColumnName="MedCard_Id" />
@@ -568,6 +560,14 @@
         <ScalarProperty Name="Id" ColumnName="Doctor_Id" />
       </EndProperty>
       <EndProperty Name="WorkTime">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PatientMedCard" TypeName="ModelMED.PatientMedCard" StoreEntitySet="PersonSet_Patient">
+      <EndProperty Name="MedCard">
+        <ScalarProperty Name="Id" ColumnName="MedCard_Id" />
+      </EndProperty>
+      <EndProperty Name="Patient">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
